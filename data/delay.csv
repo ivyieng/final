@@ -1,3 +1,9 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:563c25a75be4dc9ddcab7f9020e7ca0f98c2069508171eaf6e33a46ff87ab6cf
-size 198
+dep_delay,num_flights,percent
+No delay,3632960,65%
+1-5 mins,517579,9%
+6-10 mins,288929,5%
+11-15 mins,195546,3%
+16-20 mins,141566,3%
+21-30 mins,191986,3%
+31-60 mins,278421,5%
+1+ hrs,370671,7%

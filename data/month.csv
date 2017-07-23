@@ -1,3 +1,13 @@
-version https://git-lfs.github.com/spec/v1
-oid sha256:4369284c4226e9b0c40e3e21180e5d1e618d5f8d0cb6f4069259f0e25cddc100
-size 268
+month_num,month,avg_dep_delay,num_flights
+1,Jan,10.8,445827
+2,Feb,10.7,423889
+3,Mar,11.3,479122
+4,Apr,9.4,461630
+5,May,10.3,479358
+6,Jun,14.3,487637
+7,Jul,17.6,502457
+8,Aug,15.3,498347
+9,Sep,8.9,454878
+10,Oct,8.6,472626
+11,Nov,8.5,450938
+12,Dec,15.8,460949
