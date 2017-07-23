@@ -1,0 +1,291 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>US Flight Delay in 2016 - Month</title>
+     <style>
+        body {
+            font-family: "source_sans_proregular", sans-serif;
+            width: 750px;
+            height: 400px;
+            position: relative;
+            margin: 0 auto;
+        }
+
+        svg {
+
+        }
+
+        path.slice{
+            stroke-width:2px;
+        }
+
+        text{
+            ffont-family: "source_sans_proregular", sans-serif;
+        }
+
+        polyline{
+            opacity: .3;
+            stroke: black;
+            stroke-width: 2px;
+            fill: none;
+        }
+
+        .labelValue{
+            font-family: "source_sans_proregular", sans-serif;
+            font-size: 60%;
+            opacity: .5;
+
+        }
+
+        label {
+            font-family: "source_sans_proregular", sans-serif;
+            font-weight: normal;
+        }
+
+        .toolTip {
+            font-family: "source_sans_proregular", sans-serif;
+            position: absolute;
+            display: none;
+            width: auto;
+            height: auto;
+            background: none repeat scroll 0 0 white;
+            border: 0 none;
+            border-radius: 8px 8px 8px 8px;
+            box-shadow: -3px 3px 15px #888888;
+            color: black;
+            font: 12px sans-serif;
+            padding: 5px;
+            text-align: left;
+        }
+
+
+        .legend {
+            font-family: "source_sans_proregular", sans-serif;
+            font-size: 60%;
+        }
+
+        rect {
+            stroke-width: 2;
+        }
+
+        text {
+            font: 11px sans-serif;
+        }
+
+        text.value{
+            font-size: 200%;
+            fill: white;
+        }
+
+        text.label{
+            font-size: 100%;
+        }
+
+        .axis text {
+            font: 11px sans-serif;
+        }
+
+        .axis path{
+            fill: none;
+            stroke: #000;
+        }
+
+        .axis line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .axis .tick line {
+            stroke-width: 1;
+            stroke: rgba(0, 0, 0, 0.2);
+        }
+
+        .axisHorizontal path{
+            fill: none;
+        }
+
+        .axisHorizontal line {
+            fill: none;
+            stroke: #000;
+            shape-rendering: crispEdges;
+        }
+
+        .axisHorizontal .tick line {
+            stroke-width: 1;
+            stroke: rgba(0, 0, 0, 0.2);
+        }
+
+        .bar {
+            fill-opacity: .9;
+        }
+
+        .bar:hover {
+            fill-opacity: .6;
+        }
+
+        .x.axis path {
+            display: none;
+        }
+
+        form{
+            margin: 5px;
+            font: 12px sans-serif;
+            text-align: center;
+        }
+    </style>
+
+</head>
+<body>
+    <form>
+        <label><input type="radio" name="dataset" id="dataset" value="delay" checked> Average Departure Delay </label>
+        <label><input type="radio" name="dataset" id="dataset" value="num_flight"> Total Number of Flights </label>
+    </form>
+
+    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script>
+        var margin = {top: (parseInt(d3.select('body').style('height'), 10)/10), right: (parseInt(d3.select('body').style('width'), 10)/20), bottom: (parseInt(d3.select('body').style('height'), 10)/10), left: (parseInt(d3.select('body').style('width'), 10)/20)},
+        width = parseInt(d3.select('body').style('width'), 10) - margin.left - margin.right,
+        height = parseInt(d3.select('body').style('height'), 10) - margin.top - margin.bottom;
+
+        var div = d3.select("body").append("div").attr("class", "toolTip");
+
+
+        var x = d3.scale.ordinal()
+            .rangeRoundBands([0, width], .2, 0.5);
+
+        var y = d3.scale.linear()
+            .range([height, 0]);
+
+        var xAxis = d3.svg.axis()
+            .scale(x)
+            .orient("bottom");
+
+        var yAxis = d3.svg.axis()
+            .scale(y)
+            .orient("left")
+            .tickSize(3);
+
+        var svg = d3.select("body").append("svg")
+            .attr("width", width + margin.left + margin.right)
+            .attr("height", height + margin.top + margin.bottom)
+            .append("g")
+            .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
+
+        svg.append("g")
+            .attr("class", "x axis")
+            .attr("transform", "translate(0," + height + ")")
+            .call(xAxis);
+
+        d3.selectAll("input").on("change", selectVal);
+
+        this.value = "delay";
+        selectVal();
+
+
+        function selectVal(){
+            var value = this.value;
+
+            d3.csv("data/month.csv", function(error, data) {
+                if (error) throw error;
+
+                data.forEach(function(d) {
+                    d.num_flights = +d.num_flights;
+                    d.avg_dep_delay = +d.avg_dep_delay;
+                });
+
+                x.domain(data.map(function(d) { return d.month; }));
+
+                svg.append("g")
+                    .attr("class", "x axis")
+                    .attr("transform", "translate(0," + height + ")")
+                    .call(xAxis);
+
+                svg.select(".y.axis").remove();
+                svg.select(".x.axis").remove();
+
+                if (value == "delay"){
+                    y.domain([0, d3.max(data, function(d) { return d.avg_dep_delay; })]);
+                    svg.append("g")
+                        .attr("class", "y axis")
+                        .attr("transform", "translate(8,0)")
+                        .call(yAxis)
+                        .append("text")
+                        .attr("transform", "rotate(-90)")
+                        .attr("y", 3)
+                        .attr("dy", "1em")
+                        .style("text-anchor", "end")
+                        .text("Average Departure Delay (minutes)");
+                    var bar = svg.selectAll(".bar")
+                        .attr("fill","steelblue")
+                        .data(data, function(d) { return d.month; });
+                    bar.enter().append("rect")
+                        .attr("class", "bar")
+                        .attr("fill","steelblue")
+                        .attr("x", function(d) { return x(d.month); })
+                        .attr("y", function(d) { return y(d.avg_dep_delay); })
+                        .attr("height", function(d) { return height - y(d.avg_dep_delay); })
+                        .attr("width", x.rangeBand());
+                    bar.on("mousemove", function(d){
+                        div.style("left", d3.event.pageX+10+"px");
+                        div.style("top", d3.event.pageY-25+"px");
+                        div.style("display", "inline-block");
+                        div.html("Month: "+(d.month)+"<br>"+"Avg. Departure Delay: "+(d.avg_dep_delay)+" mins");
+                    });
+                }
+                else if (value == "num_flight"){
+                    y.domain([0, d3.max(data, function(d) { return d.num_flights; })]);
+                    svg.append("g")
+                        .attr("class", "y axis")
+                        .attr("transform", "translate(8,0)")
+                        .call(yAxis)
+                        .append("text")
+                        .attr("transform", "rotate(-90)")
+                        .attr("y", 3)
+                        .attr("dy", "1em")
+                        .style("text-anchor", "end")
+                        .text("Number of Flights");
+                    var bar = svg.selectAll(".bar")
+                        .attr("fill","darkorange")
+                        .data(data, function(d) { return d.month; });
+                    bar.enter().append("rect")
+                        .attr("class", "bar")
+
+                        .attr("x", function(d) { return x(d.month); })
+                        .attr("y", function(d) { return y(d.num_flights); })
+                        .attr("height", function(d) { return height - y(d.num_flights); })
+                        .attr("width", x.rangeBand());
+                    bar.on("mousemove", function(d){
+                        div.style("left", d3.event.pageX+10+"px");
+                        div.style("top", d3.event.pageY-25+"px");
+                        div.style("display", "inline-block");
+                        div.html("Month: "+(d.month)+"<br>"+"Number of Flights: "+(d.num_flights));
+                    });
+                }
+
+                bar.on("mouseout", function(d){
+                    div.style("display", "none");
+                });
+
+                bar.exit().remove();
+
+                if (value == "delay"){
+                    bar.transition()
+                        .duration(750)
+                        .attr("y", function(d) { return y(d.avg_dep_delay); })
+                        .attr("height", function(d) { return height - y(d.avg_dep_delay); });
+                } else if (value == "num_flight"){
+                    bar.transition()
+                        .duration(750)
+                        .attr("y", function(d) { return y(d.num_flights); })
+                        .attr("height", function(d) { return height - y(d.num_flights); });
+                }
+
+            });
+        }
+
+
+    </script>
+</body>
+</html>
