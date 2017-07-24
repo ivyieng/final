@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>US Flight Delay in 2016 - Airport</title>
+    <style>
+    body {
+        font-family: "source_sans_proregular", sans-serif;
+        width: 700px;
+        height: 500px;
+        position: relative;
+        margin: 0 auto;
+    }
+    svg {
+        width: 700px;
+        height: 500px;
+    }
+    #states path {
+        fill: #ccc;
+        stroke: #fff;
+    }
+    .tooltip {
+        background: #000000;
+        box-shadow: 0 0 5px #999999;
+        color: #ffffff;
+        display: none;
+        font-family: "source_sans_proregular", sans-serif;
+        font-size: 12px;
+        left: 100px;
+        padding: 10px;
+        position: absolute;
+        text-align: left;
+        top: 0px;
+        width: 180px;
+        opacity:.88;
+    }
+
+    circle {
+        fill: steelblue;
+        fill-opacity: .8;
+
+    }
+    circle:hover {
+        fill-opacity: .5;
+    }
+    .legend {
+        font-family: "source_sans_proregular", sans-serif;
+        font-size: 12px;
+    }
+
+    </style>
+</head>
+<body>
+    <div id="chart"></div>
+    <script src="https://d3js.org/d3.v4.min.js"></script>
+    <script src="https://d3js.org/d3-array.v1.min.js"></script>
+    <script src="https://d3js.org/d3-geo.v1.min.js"></script>
+    <script>
+        var projection = d3.geoAlbersUsa();
+
+
+        var path = d3.geoPath()
+                    .projection(projection);
+
+        var svg = d3.select("body").append("svg");
+
+        var states = svg.append("g")
+                        .attr("id", "states");
+        var circles = svg.append("g")
+                        .attr("id", "circles");
+
+        var div = d3.select("body").append("div").attr("class", "tooltip");
+
+        d3.json("data/us-states.json", function(collection) {
+            states.selectAll("path")
+                .data(collection.features)
+                .enter().append("path")
+                .attr("d", path);
+        });
+
+        d3.csv("data/airports.csv", function(error, data) {
+            if (error) throw error;
+
+            data.forEach(function(d) {
+                d.num_flights = +d.num_flights;
+                d.delay = +d.delay;
+                d.long = +d.long;
+                d.lat = +d.lat;
+            });
+
+
+            var circle = svg.selectAll("circle")
+                            .data(data, function(d) { return d.airport; })
+                            .enter().append("circle")
+                            //.attr("cx", function(d, i) { return d.long; })
+                            //.attr("cy", function(d, i) { return d.lat; })
+                            .attr("r", function(d, i) { return Math.sqrt(d.num_flights)/20; })
+                            .attr("transform", function(d) {return "translate(" + projection([d.long,d.lat]) + ")";});
+
+            circle.on("mousemove", function(d){
+                div.style('top', (d3.event.layerY + 10) + 'px')
+                    .style('left', (d3.event.layerX + 10) + 'px');
+                div.style("display", "inline-block");
+                div.html("Airport: "+(d.origin)+"<br>"
+                        +"City: "+(d.city)+"<br>"
+                        +"Avg. Departure Delay: "+(d.delay)+" mins<br>"
+                        +"Number of Flights: "+(d.num_flights.toLocaleString()));
+            });
+        });
+    </script>
+</body>
+</html>

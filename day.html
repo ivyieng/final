@@ -6,8 +6,8 @@
     <style>
 
         #chart {
-            width: 700px;
-            height: 300px;
+            width: 750px;
+            height: 350px;
         }
 
         rect.bordered {
@@ -51,8 +51,8 @@
     <div id="dataset-picker">
     </div>
     <script type="text/javascript">
-      var margin = { top: 20, right: 0, bottom: 0, left: 30 },
-          width = 700 - margin.left - margin.right,
+      var margin = { top: 20, right: 100, bottom: 0, left: 30 },
+          width = 800 - margin.left - margin.right,
           height = 300 - margin.top - margin.bottom,
           gridSize = Math.floor(width / 22),
           legendElementWidth = gridSize*2,
@@ -63,7 +63,7 @@
           dataset = "data/day.csv";
 
       var svg = d3.select("#chart").append("svg")
-          .attr("width", 700)
+          .attr("width", 800)
           .attr("height", 300)
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
@@ -132,7 +132,7 @@
 
           legend.append("rect")
             .attr("x", function(d, i) { return legendElementWidth * i; })
-            .attr("y", height-gridSize/2-20)
+            .attr("y", height-gridSize/2-30)
             .attr("width", legendElementWidth)
             .attr("height", gridSize / 2)
             .style("fill", function(d, i) { return colors[i]; });
