@@ -1,13 +1,13 @@
 airline_code,airline,num_flights,delay
-AS,Alaska Airlines Inc.,177280,5.8
 HA,Hawaiian Airlines Inc.,76789,4
-F9,Frontier Airlines Inc.,95121,16.9
-B6,JetBlue Airways,282473,16.4
-NK,Spirit Air Lines,138199,16
-UA,United Air Lines Inc.,545067,14
-EV,ExpressJet Airlines Inc.,490990,13.7
-VX,Virgin America,69121,13.6
-AA,American Airlines Inc.,914495,12
-OO,SkyWest Airlines Inc.,605933,11.7
-WN,Southwest Airlines Co.,1299444,10.8
+AS,Alaska Airlines Inc.,177280,5.8
 DL,Delta Air Lines Inc.,922746,10.3
+WN,Southwest Airlines Co.,1299444,10.8
+OO,SkyWest Airlines Inc.,605933,11.7
+AA,American Airlines Inc.,914495,12
+VX,Virgin America,69121,13.6
+EV,ExpressJet Airlines Inc.,490990,13.7
+UA,United Air Lines Inc.,545067,14
+NK,Spirit Air Lines,138199,16
+B6,JetBlue Airways,282473,16.4
+F9,Frontier Airlines Inc.,95121,16.9

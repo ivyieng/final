@@ -43,20 +43,21 @@
             font-weight: normal;
         }
 
-        .toolTip {
-            font-family: "source_sans_proregular", sans-serif;
-            position: absolute;
+        .tooltip {
+            background: #000000;
+            box-shadow: 0 0 5px #999999;
+            color: #ffffff;
             display: none;
-            width: auto;
-            height: auto;
-            background: none repeat scroll 0 0 white;
-            border: 0 none;
-            border-radius: 8px 8px 8px 8px;
-            box-shadow: -3px 3px 15px #888888;
-            color: black;
-            font: 12px sans-serif;
-            padding: 5px;
+            font-family: "source_sans_proregular", sans-serif;
+            font-size: 12px;
+            left: 100px;
+            padding: 10px;
+            position: absolute;
             text-align: left;
+            top: 0px;
+            width: 180px;
+            z-index: 10;
+            opacity:.88;
         }
 
 
@@ -149,7 +150,7 @@
         width = parseInt(d3.select('body').style('width'), 10) - margin.left - margin.right,
         height = parseInt(d3.select('body').style('height'), 10) - margin.top - margin.bottom;
 
-        var div = d3.select("body").append("div").attr("class", "toolTip");
+        var div = d3.select("body").append("div").attr("class", "tooltip");
 
 
         var x = d3.scale.ordinal()
@@ -228,8 +229,8 @@
                         .attr("height", function(d) { return height - y(d.avg_dep_delay); })
                         .attr("width", x.rangeBand());
                     bar.on("mousemove", function(d){
-                        div.style("left", d3.event.pageX+10+"px");
-                        div.style("top", d3.event.pageY-25+"px");
+                        div.style('top', (d3.event.layerY + 10) + 'px')
+                            .style('left', (d3.event.layerX + 10) + 'px');
                         div.style("display", "inline-block");
                         div.html("Month: "+(d.month)+"<br>"+"Avg. Departure Delay: "+(d.avg_dep_delay)+" mins");
                     });
@@ -251,14 +252,13 @@
                         .data(data, function(d) { return d.month; });
                     bar.enter().append("rect")
                         .attr("class", "bar")
-
                         .attr("x", function(d) { return x(d.month); })
                         .attr("y", function(d) { return y(d.num_flights); })
                         .attr("height", function(d) { return height - y(d.num_flights); })
                         .attr("width", x.rangeBand());
                     bar.on("mousemove", function(d){
-                        div.style("left", d3.event.pageX+10+"px");
-                        div.style("top", d3.event.pageY-25+"px");
+                        div.style('top', (d3.event.layerY + 10) + 'px')
+                            .style('left', (d3.event.layerX + 10) + 'px');
                         div.style("display", "inline-block");
                         div.html("Month: "+(d.month)+"<br>"+"Number of Flights: "+(d.num_flights));
                     });

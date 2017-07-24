@@ -4,6 +4,12 @@
     <meta charset="UTF-8">
     <title>US Flight Delay by Day</title>
     <style>
+
+        #chart {
+            width: 700px;
+            height: 300px;
+        }
+
         rect.bordered {
             stroke: #E6E6E6;
             stroke-width:2px;
@@ -15,9 +21,9 @@
         }
 
         .tooltip {
-            background: #eee;
+            background: #000000;
             box-shadow: 0 0 5px #999999;
-            color: #333;
+            color: #ffffff;
             display: none;
             font-family: "source_sans_proregular", sans-serif;
             font-size: 12px;
@@ -25,9 +31,10 @@
             padding: 10px;
             position: absolute;
             text-align: left;
-            top: 95px;
+            top: 0px;
             width: 180px;
             z-index: 10;
+            opacity:.8;
         }
 
         rect:hover{
@@ -44,10 +51,10 @@
     <div id="dataset-picker">
     </div>
     <script type="text/javascript">
-      var margin = { top: 50, right: 0, bottom: 100, left: 30 },
-          width = 960 - margin.left - margin.right,
-          height = 430 - margin.top - margin.bottom,
-          gridSize = Math.floor(width / 24),
+      var margin = { top: 20, right: 0, bottom: 0, left: 30 },
+          width = 700 - margin.left - margin.right,
+          height = 300 - margin.top - margin.bottom,
+          gridSize = Math.floor(width / 22),
           legendElementWidth = gridSize*2,
           buckets = 9,
           colors = ["#1a9850","#66bd63","#a6d96a","#d9ef8b","#ffffbf","#fee08b","#fdae61","#f46d43","#d73027"],
@@ -56,8 +63,8 @@
           dataset = "data/day.csv";
 
       var svg = d3.select("#chart").append("svg")
-          .attr("width", width + margin.left + margin.right)
-          .attr("height", height + margin.top + margin.bottom)
+          .attr("width", 700)
+          .attr("height", 300)
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -125,7 +132,7 @@
 
           legend.append("rect")
             .attr("x", function(d, i) { return legendElementWidth * i; })
-            .attr("y", height)
+            .attr("y", height-gridSize/2-20)
             .attr("width", legendElementWidth)
             .attr("height", gridSize / 2)
             .style("fill", function(d, i) { return colors[i]; });
@@ -134,7 +141,7 @@
             .attr("class", "mono")
             .text(function(d) { return "≥ " + Math.round(d); })
             .attr("x", function(d, i) { return legendElementWidth * i; })
-            .attr("y", height + gridSize);
+            .attr("y", height - gridSize/2-20);
 
           legend.exit().remove();
 

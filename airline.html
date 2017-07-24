@@ -21,7 +21,7 @@
         }
 
         text{
-            ffont-family: "source_sans_proregular", sans-serif;
+            font-family: "source_sans_proregular", sans-serif;
         }
 
         polyline{
@@ -43,22 +43,22 @@
             font-weight: normal;
         }
 
-        .toolTip {
-            font-family: "source_sans_proregular", sans-serif;
-            position: absolute;
+        .tooltip {
+            background: #000000;
+            box-shadow: 0 0 5px #999999;
+            color: #ffffff;
             display: none;
-            width: auto;
-            height: auto;
-            background: none repeat scroll 0 0 white;
-            border: 0 none;
-            border-radius: 8px 8px 8px 8px;
-            box-shadow: -3px 3px 15px #888888;
-            color: black;
-            font: 12px sans-serif;
-            padding: 5px;
+            font-family: "source_sans_proregular", sans-serif;
+            font-size: 12px;
+            left: 100px;
+            padding: 10px;
+            position: absolute;
             text-align: left;
+            top: 0px;
+            width: 180px;
+            z-index: 10;
+            opacity:.88;
         }
-
 
         .legend {
             font-family: "source_sans_proregular", sans-serif;
@@ -149,7 +149,7 @@
         width = parseInt(d3.select('body').style('width'), 10) - margin.left - margin.right,
         height = parseInt(d3.select('body').style('height'), 10) - margin.top - margin.bottom;
 
-        var div = d3.select("body").append("div").attr("class", "toolTip");
+        var div = d3.select("body").append("div").attr("class", "tooltip");
 
         var formatPercent = d3.format("");
 
@@ -161,7 +161,6 @@
 
         var xAxis = d3.svg.axis()
                 .scale(x)
-                .tickSize(3)
                 .orient("bottom");
 
         var yAxis = d3.svg.axis()
@@ -228,8 +227,8 @@
                         .attr("width", function(d) { return width - x(d.delay); })
                         .attr("height", y.rangeBand());
                     bar.on("mousemove", function(d){
-                        div.style("left", d3.event.pageX+10+"px");
-                        div.style("top", d3.event.pageY-25+"px");
+                        div.style('top', (d3.event.layerY + 10) + 'px')
+                            .style('left', (d3.event.layerX + 10) + 'px');
                         div.style("display", "inline-block");
                         div.html("Airline: "+(d.airline)+"<br>"+"Avg. Departure Delay: "+(d.delay)+" mins");
                     });
@@ -255,8 +254,8 @@
                         .attr("width", function(d) { return width - x(d.num_flights); })
                         .attr("height", y.rangeBand());
                     bar.on("mousemove", function(d){
-                        div.style("left", d3.event.pageX+10+"px");
-                        div.style("top", d3.event.pageY-25+"px");
+                        div.style('top', (d3.event.layerY + 10) + 'px')
+                            .style('left', (d3.event.layerX + 10) + 'px');
                         div.style("display", "inline-block");
                         div.html("Airline: "+(d.airline)+"<br>"+"Number of Flights: "+(d.num_flights));
                     });
