@@ -34,16 +34,19 @@
         width: 180px;
         opacity:.88;
     }
-
     circle {
-        fill: steelblue;
-        fill-opacity: .8;
-
+        fill-opacity: .7;
     }
     circle:hover {
-        fill-opacity: .5;
+        fill-opacity: 1;
     }
     .legend {
+        fill-opacity: .7;
+    }
+    .legend:hover {
+        fill-opacity: 1;
+    }
+    .legend-text {
         font-family: "source_sans_proregular", sans-serif;
         font-size: 12px;
     }
@@ -56,8 +59,14 @@
     <script src="https://d3js.org/d3-array.v1.min.js"></script>
     <script src="https://d3js.org/d3-geo.v1.min.js"></script>
     <script>
-        var projection = d3.geoAlbersUsa();
+        var width = d3.select('body').style('width');
+        var height = d3.select('body').style('height');
+        var buckets = 9;
+        var colors = ["#1a9850","#66bd63","#a6d96a","#d9ef8b","#ffffbf","#fee08b","#fdae61","#f46d43","#d73027"];
 
+        var projection = d3.geoAlbersUsa()
+                            .scale(800)
+                            .translate([300,230]);
 
         var path = d3.geoPath()
                     .projection(projection);
@@ -88,14 +97,17 @@
                 d.lat = +d.lat;
             });
 
+            var colorScale = d3.scaleQuantile()
+              .domain([0, buckets - 1, 20])
+              .range(colors);
 
             var circle = svg.selectAll("circle")
                             .data(data, function(d) { return d.airport; })
                             .enter().append("circle")
-                            //.attr("cx", function(d, i) { return d.long; })
-                            //.attr("cy", function(d, i) { return d.lat; })
                             .attr("r", function(d, i) { return Math.sqrt(d.num_flights)/20; })
-                            .attr("transform", function(d) {return "translate(" + projection([d.long,d.lat]) + ")";});
+                            .attr("transform", function(d) {return projection([d.long,d.lat])==null?null:"translate(" + projection([d.long,d.lat]) + ")";})
+                            .style("display", function(d) {return projection([d.long,d.lat])==null?"none":"";})
+                            .style("fill", function(d) { return colorScale(d.delay)});
 
             circle.on("mousemove", function(d){
                 div.style('top', (d3.event.layerY + 10) + 'px')
@@ -106,6 +118,31 @@
                         +"Avg. Departure Delay: "+(d.delay)+" mins<br>"
                         +"Number of Flights: "+(d.num_flights.toLocaleString()));
             });
+
+            circle.on("mouseout", function(d){
+                div.style("display", "none");
+            });
+
+            var legend = svg.selectAll("legend")
+              .data([0,2,3,5,7,9,12,15,17]);
+
+            legend.append("legend");
+
+            legend.enter().append("rect")
+            .attr("class","legend")
+            .attr("x", function(d, i) { return 60 * i; })
+            .attr("y", 450)
+            .attr("width", 60)
+            .attr("height", 15)
+            .style("fill", function(d, i) { return colors[i]; });
+
+            legend.enter().append("text")
+            .attr("class","legend-text")
+            .text(function(d) { return "≥ " + Math.round(d); })
+            .attr("x", function(d, i) { return 60 * i; })
+            .attr("y", 450);
+
+            legend.exit().remove();
         });
     </script>
 </body>

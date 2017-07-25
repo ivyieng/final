@@ -98,8 +98,12 @@
         });
 
 
+          //var colorScale = d3.scale.quantile()
+          //    .domain([0, buckets - 1, d3.max(data, function (d) { return d.avg_dep_delay; })])
+          //    .range(colors);
+
           var colorScale = d3.scale.quantile()
-              .domain([0, buckets - 1, d3.max(data, function (d) { return d.avg_dep_delay; })])
+              .domain([0, buckets - 1, 20])
               .range(colors);
 
           var cards = svg.selectAll(".hour")
