@@ -1,5 +1,5 @@
 # CS498 (Data Visualization) - Final Project
-######2017 Summer
+##2017 Summer
 
 by Manieng Ivy Lao
 

@@ -101,7 +101,7 @@
             }));
             var percent = Math.round(1000 * d.data.num_flights / total) / 10;
             tooltip.select('.label').html('Departure Delay: '+d.data.dep_delay);
-            tooltip.select('.count').html('Number of Flights: '+d.data.num_flights);
+            tooltip.select('.count').html('Number of Flights: '+d.data.num_flights.toLocaleString());
             tooltip.select('.percent').html('Percentage of Flights: '+percent + '%');
             tooltip.style('display', 'block');
           });
