@@ -160,7 +160,7 @@
                 tooltip.style("display", "inline-block");
                 tooltip.html("Day: "+(d.day_of_week)+"<br>"
                             +"Departure Time: "+(d.dep_time_period)+"<br>"
-                            +"Number of Flights: "+(d.num_flights)+"<br>"
+                            +"Number of Flights: "+(d.num_flights.toLocaleString())+"<br>"
                             +"Avg. Departure Delay: "+(d.avg_dep_delay)+ " mins");
             });
           cards.on("mouseout",

@@ -108,7 +108,7 @@
         }
         form{
             margin: 5px;
-            font: 12px sans-serif;
+            font: 12px;
             text-align: center;
         }
         .line {
@@ -221,7 +221,7 @@
                         div.style('top', (d3.event.layerY + 10) + 'px')
                             .style('left', (d3.event.layerX + 10) + 'px');
                         div.style("display", "inline-block");
-                        div.html("Airline: "+(d.airline)+"<br>"+"Avg. Departure Delay: "+(d.delay)+" mins");
+                        div.html("Airline: "+(d.airline)+"<br>"+"Avg. Departure Delay: "+(d.delay)+" mins"+"<br>"+"Number of Flights: "+(d.num_flights.toLocaleString()));
                     });
 
                     var line = d3.svg.line()
@@ -268,7 +268,7 @@
                         div.style('top', (d3.event.layerY + 10) + 'px')
                             .style('left', (d3.event.layerX + 10) + 'px');
                         div.style("display", "inline-block");
-                        div.html("Airline: "+(d.airline)+"<br>"+"Number of Flights: "+(d.num_flights.toLocaleString()));
+                        div.html("Airline: "+(d.airline)+"<br>"+"Number of Flights: "+(d.num_flights.toLocaleString())+"<br>"+"Avg. Departure Delay: "+(d.delay)+" mins");
                     });
                 }
 
