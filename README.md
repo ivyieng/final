@@ -1,4 +1,4 @@
-# About this [Visualization] (https://ivyieng.github.io/final/flights)
+# About this [Visualization](https://ivyieng.github.io/final/flights)
 This visualization follows the **interactive slideshow** narrative visualization structure. The slideshow structural layout was constructed using [reveal.js](http://lab.hakim.se/reveal-js) editor and all the charts were written using D3.js embedded in the slides as iframes.
 
 ## Scenes
@@ -37,8 +37,7 @@ There are 5 main scenes in between the opening and ending scene. Each scene cons
 Heatmap inspired by [Tom May's Block](http://bl.ocks.org/tjdecke/5558084), see [license](/license/heatmap-license.txt).
 
 ## Source
-Data:
-[Bureau of Transport Statistics (BTS) - On-Time Performance dataset](https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time)
+Data from [Bureau of Transport Statistics (BTS) - On-Time Performance dataset](https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time)
 
 ## Author
 Manieng Ivy Lao
