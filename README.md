@@ -9,7 +9,7 @@ There are 5 main scenes in between the opening and ending scene. Each scene cons
 ## Annotations
 **Tooltips** - The tooltips in all charts follow the same CSS template to support visual consistency.
 
-**Bar chart annotations** - As there are multiple bar charts in this visualization, they follow the same template to sure the axis labels and average lines are displayed in a consistent manner. For the "Average Departure Delay" bar charts in Scene 2 and 4, the average line will be cleared when users switch to the other bar chart.
+**Bar chart annotations** - As there are multiple bar charts in this visualization, they follow the same template to ensure the axis labels and average lines are displayed in a consistent manner. For the "Average Departure Delay" bar charts in Scene 2 and 4, the average line will be cleared when users switch to the other bar chart.
 
 ## Parameters
 **Slide number** - The slide number is shown in the bottom center of each of the 5 main scenes. The previous and next slide numbers are shown in the bottom left and right respectively.
@@ -19,20 +19,20 @@ There are 5 main scenes in between the opening and ending scene. Each scene cons
 **Map filter parameters** - The map on Scene 5-1 shows all the US airports by default. The 3 parameters by levels of delay controlled by checkboxes can let users multiselect or deselect to filter the airports on the map.
 
 ## Triggers
-**Slide navigation controls** - The navigation can be controlled by keyboard arrow keys or by pressing the "<" and ">" button in the bottom right corner of each slide.
+**Slide navigation controls** - The navigation can be controlled by keyboard arrow keys or by pressing the "<", ">" and "v" button in the bottom right corner of each slide.
 
 **Tooltips** - The tooltips in all the charts are triggered by mouseover event on chart elements.
 
-**Bar chart selection** - The 2 radio buttons on Scene 2 and 4 allow users to select and view two different set of figures in the bar chart.
+**Bar chart selection** - The 2 radiobuttons on Scene 2 and 4 allow users to select and view two different set of figures in the bar chart.
 
 **Map filter** - The 3 checkboxes on Scene 5-1 allow users to filter the airports by 3 levels of delay.
 
-**Button and hyperlinks** - The button and hyperlinks in the opening and closing scenes
+**Button and hyperlinks** - The button and hyperlinks in the opening and closing scenes.
 
 ## User Interface Events
-**Mouse click** - User interacts by clicking on buttons, hyperlinks, slide navigation controls, check boxes, radio buttons
+**Mouse click** - User interacts by clicking on buttons, hyperlinks, slide navigation controls, check boxes, radiobuttons.
 
-**Mouse hover** - User triggers tooltips on chart elements by mouse over events
+**Mouse hover** - User triggers tooltips on chart elements by mouseover events
 
 
 ## Credits
