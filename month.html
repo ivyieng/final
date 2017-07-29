@@ -114,11 +114,12 @@
         .line {
             opacity: 0.8;
             stroke-dasharray: 5,5;
-            stroke: slategrey;
-            stroke-width: 2px;
+            stroke: DarkTurquoise;;
+            stroke-width: 1px;
         }
         .text-label {
-            fill: slategrey;
+            fill: DarkTurquoise;;
+            font-size: 11pt;
         }
     </style>
 
@@ -231,7 +232,7 @@
                         .attr("d", line);
 
                     svg.append("text")
-                        .text("2016 Avg. Departure Delay: ~13 mins")
+                        .text("Avg. Departure Delay: ~13 mins")
                         .attr("class", "text-label")
                         .attr("x", 50)
 			            .attr("y", function(d, i) { return y(13.5); });

@@ -4,22 +4,23 @@
     <meta charset="UTF-8">
     <title>US Flight Delay by Day</title>
     <style>
-
+        body {
+            font-family: "source_sans_proregular", sans-serif;
+        }
         #chart {
             width: 750px;
             height: 350px;
+            position: relative;
+            margin: 0 auto;
         }
-
         rect.bordered {
             stroke: #E6E6E6;
             stroke-width:2px;
         }
-
         text {
             font-size: 9pt;
             font-family: "source_sans_proregular", sans-serif;
         }
-
         .tooltip {
             background: #000000;
             box-shadow: 0 0 5px #999999;
@@ -36,24 +37,35 @@
             z-index: 10;
             opacity:.8;
         }
-
         rect:hover{
             stroke: #FFFFFF;
             fill-opacity: .6;
+        }
+        .label{
+            fill: grey;
+            font-size: 9pt;
+        }
+        line.annotations {
+            stroke-width: 1px;
+            stroke: DarkTurquoise;
+        }
+        text.annotations {
+            fill: DarkTurquoise;
+            font-size: 11pt;
         }
 
     </style>
   </head>
   <body>
 
-    <script src="https://d3js.org/d3.v3.min.js"></script>
+    <script src="https://d3js.org/d3.v3.js"></script>
     <div id="chart"></div>
     <div id="dataset-picker">
     </div>
     <script type="text/javascript">
-      var margin = { top: 20, right: 100, bottom: 0, left: 30 },
+      var margin = { top: 70, right: 100, bottom: 0, left: 60 },
           width = 800 - margin.left - margin.right,
-          height = 300 - margin.top - margin.bottom,
+          height = 350 - margin.top - margin.bottom,
           gridSize = Math.floor(width / 22),
           legendElementWidth = gridSize*2,
           buckets = 9,
@@ -64,7 +76,7 @@
 
       var svg = d3.select("#chart").append("svg")
           .attr("width", 800)
-          .attr("height", 300)
+          .attr("height", 350)
           .append("g")
           .attr("transform", "translate(" + margin.left + "," + margin.top + ")");
 
@@ -96,11 +108,6 @@
             d.dep_time = +d.dep_time;
             d.num_flights = +d.num_flights;
         });
-
-
-          //var colorScale = d3.scale.quantile()
-          //    .domain([0, buckets - 1, d3.max(data, function (d) { return d.avg_dep_delay; })])
-          //    .range(colors);
 
           var colorScale = d3.scale.quantile()
               .domain([0, buckets - 1, 20])
@@ -145,7 +152,7 @@
             .attr("class", "mono")
             .text(function(d) { return "≥ " + Math.round(d); })
             .attr("x", function(d, i) { return legendElementWidth * i; })
-            .attr("y", height - gridSize/2);
+            .attr("y", height - gridSize/2-30);
 
           legend.exit().remove();
 
@@ -155,8 +162,8 @@
 
           cards.on("mousemove",
             function(d){
-                tooltip.style("left", d3.event.pageX+10+"px");
-                tooltip.style("top", d3.event.pageY-25+"px");
+                tooltip.style("left", d3.event.layerX+10+"px");
+                tooltip.style("top", d3.event.layerY-25+"px");
                 tooltip.style("display", "inline-block");
                 tooltip.html("Day: "+(d.day_of_week)+"<br>"
                             +"Departure Time: "+(d.dep_time_period)+"<br>"
@@ -171,7 +178,78 @@
         });
       };
 
-      heatmapChart(dataset);
+        svg.append("text")
+            .attr("class", "label")
+            .text("Departure delay in minutes")
+            .attr("x", 0)
+            .attr("y", height - gridSize/2);
+        svg.append("text")
+            .attr("class", "label")
+            .text("Departure Time")
+            .attr("x", 230)
+            .attr("y", -25);
+        svg.append("text")
+            .attr("class", "label")
+            .text("Day of Week")
+            .attr("x", -130)
+            .attr("y", -30)
+            .attr("transform", "rotate(-90)");
+
+
+        // annotations
+        svg.append("line")
+            .attr("class", "annotations")
+            .attr("x1", 560)
+            .attr("y1", 90)
+            .attr("x2", 560)
+            .attr("y2", 140);
+        svg.append("line")
+            .attr("class", "annotations")
+            .attr("x1", 560)
+            .attr("y1", 175)
+            .attr("x2", 560)
+            .attr("y2", 200);
+        svg.append("line")
+            .attr("class", "annotations")
+            .attr("x1", 560)
+            .attr("y1", 115)
+            .attr("x2", 575)
+            .attr("y2", 115);
+        svg.append("line")
+            .attr("class", "annotations")
+            .attr("x1", 560)
+            .attr("y1", 187)
+            .attr("x2", 575)
+            .attr("y2", 187);
+        svg.append("text")
+            .attr("class", "annotations")
+            .attr("x", 95)
+            .attr("y", -580)
+            .attr("transform", "rotate(90)")
+            .text("High delay days");
+        svg.append("line")
+            .attr("class", "annotations")
+            .attr("x1", 377)
+            .attr("y1", -25)
+            .attr("x2", 465)
+            .attr("y2", -25);
+        svg.append("line")
+            .attr("class", "annotations")
+            .attr("x1", 420)
+            .attr("y1", -40)
+            .attr("x2", 420)
+            .attr("y2", -25);
+        svg.append("text")
+            .attr("class", "annotations")
+            .attr("x", 370)
+            .attr("y", -45)
+            .text("High delay hours");
+
+
+        heatmapChart(dataset);
+
+
+
 
     </script>
   </body>

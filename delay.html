@@ -4,11 +4,14 @@
     <meta charset="UTF-8">
     <title>US Flight Delay in 2016</title>
     <style>
+      body {
+         font-family: "source_sans_proregular", sans-serif;
+      }
       #chart {
         height: 360px;
         margin: 0 auto;                                             
         position: relative;
-        width: 360px;
+        width: 850px;
       }
       .tooltip {
         background: black;
@@ -44,6 +47,14 @@
       .path:hover {
          fill-opacity: .6;
       }
+      line.annotations {
+        stroke-width: 1px;
+        stroke: DarkTurquoise;
+      }
+      text.annotations {
+        fill: DarkTurquoise;
+        font-size: 11pt;
+      }
 
     </style>
   </head>
@@ -51,8 +62,7 @@
     <div id="chart"></div>
     <script src="https://d3js.org/d3.v4.min.js"></script>
     <script>
-      (function(d3) {
-        var width = 360;
+        var width = 850;
         var height = 360;
         var radius = Math.min(width, height) / 2;
         var donutWidth = 75;
@@ -164,7 +174,53 @@
             .attr('y', legendRectSize - legendSpacing)
             .text(function(d) { return d; });
         });
-      })(window.d3);
+
+        // annotations
+        svg.append("line")
+            .attr("class", "annotations")
+            .attr("x1", 190)
+            .attr("y1", 45)
+            .attr("x2", 225)
+            .attr("y2", 45);
+        svg.append("text")
+            .attr("class", "annotations")
+            .attr("x", 230)
+            .attr("y", 50)
+            .text("65% flights were on time");
+
+        svg.append("line")
+            .attr("class", "annotations")
+            .attr("x1", -190)
+            .attr("y1", 30)
+            .attr("x2", -225)
+            .attr("y2", 30);
+        svg.append("text")
+            .attr("class", "annotations")
+            .attr("x", -350)
+            .attr("y", 30)
+            .text("18% of flights had");
+        svg.append("text")
+            .attr("class", "annotations")
+            .attr("x", -380)
+            .attr("y", 50)
+            .text("below 15 minutes delay");
+
+         svg.append("line")
+            .attr("class", "annotations")
+            .attr("x1", -190)
+            .attr("y1", -140)
+            .attr("x2", -225)
+            .attr("y2", -140);
+        svg.append("text")
+            .attr("class", "annotations")
+            .attr("x", -350)
+            .attr("y", -140)
+            .text("17% of flights had");
+        svg.append("text")
+            .attr("class", "annotations")
+            .attr("x", -390)
+            .attr("y", -120)
+            .text("15 minutes delay or more");
     </script>
   </body>
 </html>
