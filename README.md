@@ -1,4 +1,4 @@
-**Website**  [2016 US Flight Departure Delay](https://ivyieng.github.io/final/flights)
+# [2016 US Flight Departure Delay Visualization](https://ivyieng.github.io/final/flights)
 
 # About this Visualization
 This visualization follows the **interactive slideshow** narrative visualization structure. The slideshow structural layout was constructed using [reveal.js](http://lab.hakim.se/reveal-js) and all the charts were written using D3.js embedded in the slides as iframes.
@@ -12,9 +12,9 @@ There are 5 main scenes between the opening and ending scene. Each scene consist
 **Annotations** 
 Annotations in this visualization follows the same CSS template for font and line style. Annotations are available in pie chart, bar chart, heatmap, and map.
 
-Bar chart annotations - For the "Average Departure Delay" bar charts in Scene 2 and 4, the average line will be cleared when users switch to the other bar chart.
+- Bar chart annotations - For the "Average Departure Delay" bar charts in Scene 2 and 4, the average line will be cleared when users switch to the other bar chart.
 
-Map annotations - The annotations for low and high delay airports will only be displayed when the responsible option is checked.
+- Map annotations - The annotations for low and high delay airports will only be displayed when the responsible option is checked.
 
 ## Parameters
 **Slide number** - The slide numbers are shown in the bottom right corner of each slide. The previous, current, and next slide title are shown in the bottom left, center, and right respectively.
@@ -41,10 +41,13 @@ Map annotations - The annotations for low and high delay airports will only be d
 
 
 ## Credits
-Heatmap inspired by [Tom May's Block](http://bl.ocks.org/tjdecke/5558084), see [license](/license/heatmap-license.txt).
+- [D3.js](https://d3js.org/)
+- [reveal.js](http://lab.hakim.se/reveal-js) 
+- Heatmap inspired by [Tom May](http://bl.ocks.org/tjdecke/5558084), see [license](/license/heatmap-license.txt).
 
-## Source
-Data from [Bureau of Transport Statistics (BTS) - On-Time Performance dataset](https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time)
+## Data Source
+[Bureau of Transport Statistics (BTS) - On-Time Performance dataset](https://www.transtats.bts.gov/DL_SelectFields.asp?Table_ID=236&DB_Short_Name=On-Time)
 
 ## Author
-Manieng Ivy Lao ([mlao2@illinois.edu])(mlao2@illinois.edu)
+Manieng Ivy Lao 
+([mlao2@illinois.edu](mlao2@illinois.edu))
